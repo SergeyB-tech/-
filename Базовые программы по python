@@ -1,0 +1,52 @@
+Проверка чисел на четные или нечетные.
+# Ввод числа от пользователя
+number = int(input("Введите число: "))
+
+# Проверка на чётность
+if number % 2 == 0:
+    print(f"Число {number} является чётным.")
+else:
+    print(f"Число {number} является нечётным.")
+
+=====
+Прога по вычислению факториала
+def factorial_iterative(n):
+    if n < 0:
+        return "Факториал отрицательного числа не определён"
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+# Ввод числа от пользователя
+number = int(input("Введите число: "))
+print(f"{number}! = {factorial_iterative(number)}")
+
+=====
+простейшая прога на проверку полиндрома
+s = "дом" # строка 
+if s == s[::-1]:
+    print("Да")
+else:
+    print("Нет")
+=====
+Находим сумму чисел и их среднее число
+numbers = []
+print("Вводите числа по одному (для завершения введите пустую строку):")
+
+while True:
+    num_input = input("Число: ")
+    if num_input == "":
+        break
+    try:
+        numbers.append(float(num_input))
+    except ValueError:
+        print("Ошибка: введите число или пустую строку для завершения")
+
+if numbers:
+    sum_numbers = sum(numbers)
+    average = sum_numbers / len(numbers)
+    print(f"Сумма чисел: {sum_numbers}")
+    print(f"Среднее значение: {average}")
+else:
+    print("Вы не ввели ни одного числа.")
