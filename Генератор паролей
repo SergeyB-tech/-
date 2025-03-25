@@ -1,0 +1,83 @@
+Наша задача — разработать программу, которая будет генерировать случайные пароли на основе заданных пользователем параметров.
+Программа должна быть простой в использовании и предоставлять пользователю возможность настраивать следующие параметры:
+
+1.	Длина пароля: пользователь должен иметь возможность выбрать длину генерируемого пароля.
+2.	Типы символов: программа должна позволять пользователю выбирать, какие символы использовать для генерации пароля:
+o	Заглавные буквы (A-Z)
+o	Строчные буквы (a-z)
+o	Цифры (0-9)
+o	Специальные символы (!@#$%^&*)
+Функциональные требования:
+●	Генерация пароля: реализовать функцию, которая будет генерировать пароль на основе выбранных параметров.
+●	Интерфейс: создать простой текстовый интерфейс, который позволит пользователю вводить параметры генерации и получать сгенерированный пароль.
+●	Валидация ввода: обеспечить проверку правильности введённых данных (например, длина пароля должна быть положительным целым числом).
+Технические требования:
+●	Программа должна быть написана на Python.
+●	Используйте стандартные библиотеки для генерации случайных чисел и работы с символами.
+●	Структура кода должна быть ясной и понятной, с использованием функций для основных логических блоков.
+
+import random
+import string
+
+def generate_password(length, use_uppercase, use_lowercase, use_digits, use_special):
+    characters = ''
+    
+    if use_uppercase:
+        characters += string.ascii_uppercase
+    if use_lowercase:
+        characters += string.ascii_lowercase
+    if use_digits:
+        characters += string.digits
+    if use_special:
+        characters += '!@#$%^&*'
+    
+    if not characters:
+        raise ValueError("Не выбрано ни одного типа символов для генерации пароля")
+    
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+
+def get_yes_no_input(prompt):
+    while True:
+        response = input(prompt).strip().lower()
+        if response in ('y', 'yes', 'д', 'да'):
+            return True
+        elif response in ('n', 'no', 'н', 'нет'):
+            return False
+        else:
+            print("Пожалуйста, введите 'да' или 'нет' (y/n)")
+
+def get_positive_integer(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value <= 0:
+                print("Пожалуйста, введите положительное число")
+            else:
+                return value
+        except ValueError:
+            print("Пожалуйста, введите целое число")
+
+def main():
+    print("=== Генератор случайных паролей ===")
+    
+    length = get_positive_integer("Введите длину пароля: ")
+    use_uppercase = get_yes_no_input("Включать заглавные буквы (A-Z)? [y/n]: ")
+    use_lowercase = get_yes_no_input("Включать строчные буквы (a-z)? [y/n]: ")
+    use_digits = get_yes_no_input("Включать цифры (0-9)? [y/n]: ")
+    use_special = get_yes_no_input("Включать специальные символы (!@#$%^&*)? [y/n]: ")
+    
+    try:
+        password = generate_password(
+            length=length,
+            use_uppercase=use_uppercase,
+            use_lowercase=use_lowercase,
+            use_digits=use_digits,
+            use_special=use_special
+        )
+        print("\nСгенерированный пароль:", password)
+    except ValueError as e:
+        print("\nОшибка:", e)
+
+if __name__ == "__main__":
+    main()
